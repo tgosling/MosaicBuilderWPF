@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:prop="clr-namespace:MosaicBuilder.Properties"
         xmlns:local="clr-namespace:MosaicBuilder"
         mc:Ignorable="d"
         Title="Mosaic Builder v2.0" Height="560" Width="640">
@@ -10,7 +11,25 @@
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
                 <MenuItem Header="_Open"/>
+                <MenuItem Header="_Save"/>
+                <MenuItem Header="_Exit"/>
+            </MenuItem>
+            <MenuItem Header="_Options">
+                <MenuItem Header="_New"/>
+                <MenuItem Header="_Random"/>
+            </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Header="_About"/>
             </MenuItem>
         </Menu>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="125"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <WrapPanel Background="BlanchedAlmond" Grid.Column="0">
+                <Label Content=""/>
+            </WrapPanel>
+        </Grid>
     </DockPanel>
 </Window>
