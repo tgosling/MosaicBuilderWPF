@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -44,8 +44,8 @@ namespace MosaicBuilder
             source = new List<Ellipse>(paletteArray);
             //populate palette with colour selection
             PaletteView.ItemsSource = source;
-            PaletteView1.ItemsSource = PaletteView.ItemsSource;
-
         }
+
+    
     }
 }
