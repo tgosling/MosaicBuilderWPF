@@ -11,6 +11,7 @@ namespace MosaicBuilder.ViewModel
     {
        //RelayCommands
        public RelayCommand exitCommand { get; set; }
+       public RelayCommand aboutCommand { get; set; }
         
        public ViewModelMain()
         {
@@ -21,8 +22,9 @@ namespace MosaicBuilder.ViewModel
             for (int i = 0; i < TOTAL_MOSAIC_TILES; i++)
                 MosaicBrd.Add(new MosaicTile());
 
-            //Commands
+            //Relay Commands
             exitCommand = new RelayCommand(exitApp);
+            aboutCommand = new RelayCommand(aboutApp);
         }
 
         #region Menu Handlers
@@ -32,6 +34,11 @@ namespace MosaicBuilder.ViewModel
             Application.Current.Shutdown();
         }
 
+        //Handle Help->About menu click
+        private void aboutApp(object obj)
+        {
+            MessageBox.Show("Click and Drag Tile Pieces from Tile Control\non to the Mosaic Board to make pretty pictures\n\nAuthor: Tyler MJ Gosling", "About");
+        }
         #endregion //End Menu Handlers
 
         //basic view model base
