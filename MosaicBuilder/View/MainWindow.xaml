@@ -12,7 +12,7 @@
             <MenuItem Header="File">
                 <MenuItem Header="_Open"/>
                 <MenuItem Header="_Save"/>
-                <MenuItem Header="_Exit"/>
+                <MenuItem Header="_Exit" Command="{Binding exitCommand}"/>
             </MenuItem>
             <MenuItem Header="_Options">
                 <MenuItem Header="_New"/>

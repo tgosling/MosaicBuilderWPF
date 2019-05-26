@@ -3,14 +3,22 @@ using System.Windows.Input;
 
 namespace MosaicBuilder.Helper
 {
-    class RelayCommand
+    class RelayCommand : ICommand
     {
         #region Fields
+
         readonly Action<object> _execute;
         readonly Predicate<object> _canExecute;
-        #endregion//Fields
+
+        #endregion // Fields
 
         #region Constructors
+
+        public RelayCommand(Action<object> execute)
+            : this(execute, null)
+        {
+        }
+
         public RelayCommand(Action<object> execute, Predicate<object> canExecute)
         {
             if (execute == null)
@@ -19,9 +27,10 @@ namespace MosaicBuilder.Helper
             _execute = execute;
             _canExecute = canExecute;
         }
-        #endregion//End Constructors
+        #endregion // Constructors
 
         #region ICommand Members
+
         public bool CanExecute(object parameter)
         {
             return _canExecute == null ? true : _canExecute(parameter);
@@ -37,6 +46,7 @@ namespace MosaicBuilder.Helper
         {
             _execute(parameter);
         }
-        #endregion//End ICommand Members
+
+        #endregion // ICommand Members
     }
 }
