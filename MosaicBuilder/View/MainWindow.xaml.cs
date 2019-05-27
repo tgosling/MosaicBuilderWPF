@@ -70,9 +70,24 @@ namespace MosaicBuilder
             {
                 //get the selected listbox item
                 ListBox palletteBox = sender as ListBox;
+                //use FindAnccestor to acquire the OriginalSource, go up the visual tree 
+                //until a ListBoxItem is hit. Require ListBoxItem to get the string
+                ListBoxItem listBoxItem = findAncestor<ListBoxItem>((DependencyObject)e.OriginalSource);
+
+                if(listBoxItem != null)
+                {
+                    //Find the data behind the listBoxItem
+                    Ellipse theItem = (Ellipse)palletteBox.ItemContainerGenerator.ItemFromContainer(listBoxItem);
+                    //Create a DataObject continaing the string to be dragged
+                    DataObject dragData = new DataObject(typeof(Ellipse), theItem);
+                    //Initialize the dragging 
+                    DragDrop.DoDragDrop(listBoxItem, dragData, DragDropEffects.Move);
+                }
+                
             }
         }
         #endregion
+
         #region Ellipse DragDrop
         private void EllipseDestination_DragEnter(object sender, DragEventArgs e)
         {
@@ -93,5 +108,19 @@ namespace MosaicBuilder
         }
         #endregion
 
+        private static T findAncestor<T>(DependencyObject current)
+       where T : DependencyObject
+        {
+            do
+            {
+                if (current is T)
+                {
+                    return (T)current;
+                }
+                current = VisualTreeHelper.GetParent(current);
+            }
+            while (current != null);
+            return null;
+        }
     }
 }
