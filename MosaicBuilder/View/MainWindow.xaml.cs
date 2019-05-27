@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using MosaicBuilder.ViewModel;
@@ -19,6 +20,8 @@ namespace MosaicBuilder
         private Point startPoint;
         private List<Ellipse> source = null;
 
+        //Palette 
+        #region Palette Ellipses
         //Mosaic Pallette
         Ellipse e1 = new Ellipse() { Width = 15, Height = 15, Fill = Brushes.Black };
         Ellipse e2 = new Ellipse() { Width = 15, Height = 15, Fill = Brushes.Red };
@@ -35,7 +38,7 @@ namespace MosaicBuilder
         Ellipse e13 = new Ellipse() { Width = 15, Height = 15, Fill = Brushes.Black };
         Ellipse e14 = new Ellipse() { Width = 15, Height = 15, Fill = Brushes.White };
         Ellipse e15 = new Ellipse() { Width = 15, Height = 15, Fill = Brushes.Gray };
-
+        #endregion
         public MainWindow()
         {
             InitializeComponent();
@@ -46,6 +49,49 @@ namespace MosaicBuilder
             PaletteView.ItemsSource = source;
         }
 
-    
+
+        //Drag and Drop Controls
+        #region List Box Drag
+        //ListBox Preview Click
+        private void ListBoxsource_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            //Get the starting point
+            startPoint = e.GetPosition(null);//abs position
+        }
+
+        //ListBox Mouse Move/Drag
+        private void ListBoxSource_MouseMove(object sender, MouseEventArgs e)
+        {
+            Point mousePos = e.GetPosition(null);
+            Vector diff = startPoint - mousePos;
+
+            if(e.LeftButton == MouseButtonState.Pressed && (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
+                Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
+            {
+                //get the selected listbox item
+                ListBox palletteBox = sender as ListBox;
+            }
+        }
+        #endregion
+        #region Ellipse DragDrop
+        private void EllipseDestination_DragEnter(object sender, DragEventArgs e)
+        {
+            //check if it is not ellipse or if it is the sending source
+            if (!e.Data.GetDataPresent(typeof(Ellipse)) || sender == e.Source)
+                e.Effects = DragDropEffects.None;
+        }
+
+        private void EllipseDestination_Drop(object sender, DragEventArgs e)
+        {
+            //Check if it is ellipse
+            if(e.Data.GetDataPresent(typeof(Ellipse)))
+            {
+                Ellipse ColorSrc = (Ellipse)e.Data.GetData(typeof(Ellipse));
+                Ellipse destEllip = sender as Ellipse;
+                destEllip.Fill = ColorSrc.Fill;
+            }
+        }
+        #endregion
+
     }
 }
